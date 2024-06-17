@@ -7,14 +7,34 @@
 </head>
 <body>
     <h1>TikTok Video Coding</h1>
-    <form action="{{ url_for('record') }}" method="post">
+    <form action="{{ url_for('record') }}" method="post" id="videoForm">
         <div class="form-group">
-            <label>Steroids mention:</label>
+            <label>Is this about bodybuilding/fitness?</label>
             <div class="inline-options">
-                <input type="radio" id="steroids" name="mentionType" value="steroids" onclick="updateForm()" required>
-                <label for="steroids">Steroids</label>
-                <input type="radio" id="none" name="mentionType" value="none" onclick="updateForm()" required>
-                <label for="none">None</label>
+                <input type="radio" id="fitnessYes" name="fitness" value="yes" onclick="toggleInputs(true)" required>
+                <label for="fitnessYes">Yes</label>
+                <input type="radio" id="fitnessNo" name="fitness" value="no" onclick="toggleInputs(false)" required>
+                <label for="fitnessNo">No</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Steroids mention in video:</label>
+            <div class="inline-options">
+                <input type="radio" id="steroidsVideoYes" name="steroidsVideo" value="yes" onclick="updateForm()" required disabled>
+                <label for="steroidsVideoYes">Yes</label>
+                <input type="radio" id="steroidsVideoNo" name="steroidsVideo" value="no" onclick="updateForm()" required disabled>
+                <label for="steroidsVideoNo">No</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Steroids mention in caption/hashtags:</label>
+            <div class="inline-options">
+                <input type="radio" id="steroidsCaptionYes" name="steroidsCaption" value="yes" onclick="updateForm()" required disabled>
+                <label for="steroidsCaptionYes">Yes</label>
+                <input type="radio" id="steroidsCaptionNo" name="steroidsCaption" value="no" onclick="updateForm()" required disabled>
+                <label for="steroidsCaptionNo">No</label>
             </div>
         </div>
         
@@ -45,7 +65,7 @@
             <textarea id="comments" name="comments" rows="4" cols="50"></textarea>
         </div>
         
-        <button type="submit">Record Data</button>
+        <button type="submit" id="submitButton">Record Data</button>
     </form>
 </body>
 </html>

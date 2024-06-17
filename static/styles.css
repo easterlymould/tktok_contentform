@@ -19,6 +19,7 @@ form {
 .form-group label {
     display: block;
     margin-bottom: 5px;
+    font-size: 20px; /* Larger form question text */
 }
 
 .inline-options {
@@ -28,6 +29,7 @@ form {
 
 .inline-options label {
     margin-right: 15px;
+    font-size: 18px; /* Larger option text */
 }
 
 textarea {
@@ -47,4 +49,10 @@ button {
 
 button:hover {
     background-color: #218838;
+}
+
+/* Add styles for larger radio buttons */
+.inline-options input[type="radio"] {
+    width: 20px;
+    height: 20px;
 }

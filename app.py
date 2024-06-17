@@ -12,15 +12,29 @@ def index():
 @app.route('/record', methods=['POST'])
 def record():
     try:
-        mention_type = request.form['mentionType']
-        mention_sentiment = request.form.get('mentionSentiment', '')
-        sale_steroids = request.form.get('saleSteroids', '')
-        comments = request.form.get('comments', '')
+        fitness = request.form['fitness']
+        comments = request.form.get('comments', 'N/A') or 'N/A'
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
+        if fitness == 'no':
+            # If not about fitness, only write the timestamp, fitness response, and comments
+            data = [timestamp, fitness, 'N/A', 'N/A', 'N/A', 'N/A', comments]
+        else:
+            steroids_video = request.form.get('steroidsVideo', 'N/A') or 'N/A'
+            steroids_caption = request.form.get('steroidsCaption', 'N/A') or 'N/A'
+            mention_sentiment = request.form.get('mentionSentiment', 'N/A') or 'N/A'
+            sale_steroids = request.form.get('saleSteroids', 'N/A') or 'N/A'
+            data = [timestamp, fitness, steroids_video, steroids_caption, mention_sentiment, sale_steroids, comments]
 
         # Ensure the file exists before trying to open it
         if not os.path.exists('data.xlsx'):
-            return "Error: The data file does not exist.", 500
+            # Create the workbook and add headers if it doesn't exist
+            from openpyxl import Workbook
+            workbook = Workbook()
+            sheet = workbook.active
+            headers = ['Timestamp', 'Fitness', 'Steroids Video', 'Steroids Caption', 'Mention Sentiment', 'Sale of Steroids', 'Comments']
+            sheet.append(headers)
+            workbook.save('data.xlsx')
 
         # Load the workbook and select the active worksheet
         workbook = load_workbook('data.xlsx')
@@ -30,11 +44,8 @@ def record():
         next_row = sheet.max_row + 1
 
         # Append the data
-        sheet.cell(row=next_row, column=1).value = timestamp
-        sheet.cell(row=next_row, column=2).value = mention_type
-        sheet.cell(row=next_row, column=3).value = mention_sentiment
-        sheet.cell(row=next_row, column=4).value = sale_steroids
-        sheet.cell(row=next_row, column=5).value = comments
+        for col_num, value in enumerate(data, start=1):
+            sheet.cell(row=next_row, column=col_num).value = value
 
         workbook.save('data.xlsx')
 
