@@ -1,4 +1,4 @@
-This is a Flask app which that is used alongside TikTok for web or desktop.
+This is a Flask app that is used alongside TikTok for web or desktop.
 
 The form enables a researcher to code videos that they have just watched (including date and time) for certain content within the videos. In this case, it is mentions of steroids and the advertising of the sale of steroids. But it could be changed and used to record mentions of any other kind of content.
 
